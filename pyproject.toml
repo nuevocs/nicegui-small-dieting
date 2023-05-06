@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "nicegui-small-dieting"
+version = "0.1.0"
+description = ""
+authors = ["Tatsuya Tomita <tat@seriousexplosion.net>"]
+readme = "README.md"
+packages = [{include = "nicegui_small_dieting"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+nicegui = "^1.2.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
