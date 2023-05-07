@@ -9,6 +9,7 @@ packages = [{include = "nicegui_small_dieting"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 nicegui = "^1.2.13"
+supabase = "^1.0.3"
 
 
 [build-system]
