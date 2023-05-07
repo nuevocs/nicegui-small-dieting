@@ -2,7 +2,11 @@ from nicegui import ui
 from dataclasses import dataclass
 from src.db.supabase_utilities import as_dict_supabase
 from src.content.training_content import training_content
+from src.content.nutrition_records_content import nutrition_records_content
+import datetime
+import pytz
 
+tz = pytz.timezone('Asia/Tokyo')
 NUTRITION_CATEGORY = {
     1: 'Dairy',
     2: 'Meat',
@@ -29,6 +33,7 @@ def page_layout_consumbles():
             ui.label('MENU').classes("text-xl text-gray-600/75 text-center")
             ui.link('Main', main_content)
             ui.link('Training', ptpage_content)
+            ui.link('Records', nutrition_records)
 
 
 class Nutrition:
@@ -70,6 +75,7 @@ class NutritionData:
     nutrition_carbohydrate: int
     nutrition_amount: int
     nutrition_calories: float
+    date: str = datetime.datetime.now(tz).strftime('%Y-%m-%d')
 
 
 # column_name and dataclass attribute name must be the same
@@ -79,7 +85,10 @@ async def ptpage_content():
     page_layout_consumbles()
     training_content()
 
-
+@ui.page('/nutrition-reords')
+async def nutrition_records():
+    page_layout_consumbles()
+    nutrition_records_content()
 
 
 @ui.page('/')
