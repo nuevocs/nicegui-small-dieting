@@ -1,6 +1,7 @@
 from nicegui import ui
-from dataclasses import dataclass, asdict
-from db.supabase_utilities import supabase_client, select_all, as_dict_supabase
+from dataclasses import dataclass
+from src.db.supabase_utilities import as_dict_supabase
+from src.content.training_content import training_content
 
 NUTRITION_CATEGORY = {
     1: 'Dairy',
@@ -59,13 +60,6 @@ class Nutrition:
         ui.notify(f"Calories: {carolies}")
 
 
-class PhysicalTraining:
-    def __init__(self):
-        self.pt_name = 0
-        self.pt_category = 0
-        self.pt_duration = 0
-        self.pt_intensity = 0
-
 
 @dataclass
 class NutritionData:
@@ -83,6 +77,9 @@ class NutritionData:
 @ui.page('/physical-training')
 async def ptpage_content():
     page_layout_consumbles()
+    training_content()
+
+
 
 
 @ui.page('/')
@@ -109,7 +106,6 @@ async def main_content():
         nutrition.nutrition_carbohydrate.value = 0
         nutrition.nutrition_amount.value = 0
 
-        # print(nutrition_data)
 
     def writing_data_to_db(collection):
         nbr_records = len(collection)
@@ -135,7 +131,8 @@ async def main_content():
                     nutrition = Nutrition()
                     ui.button("add", on_click=lambda: get_data_from_inputs())
 
-        with ui.card():
+        with ui.card().tight():
+            ui.image('https://picsum.photos/id/60/640/350')
             with ui.card_section():
                 with ui.column():
                     ui.markdown("""

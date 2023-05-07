@@ -14,7 +14,7 @@ def supabase_client() -> Client:
     return supabase
 
 
-def as_dict_supabase(table_name: str, data) -> dict:
+def as_dict_supabase(table_name: str, data: dataclass) -> dict:
     supabase = supabase_client()
     dct = asdict(data)
     send_data = supabase.table(table_name).insert(dct).execute()
