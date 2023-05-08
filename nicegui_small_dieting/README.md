@@ -5,3 +5,5 @@ https://help.kinduct.com/s/article/What-is-RPE-and-how-is-training-load-calculat
 
 ## Todos
 
+- [ ] add a plot page
+- [ ] 

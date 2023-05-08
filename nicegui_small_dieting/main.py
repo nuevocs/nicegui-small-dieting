@@ -7,7 +7,7 @@ import datetime
 import pytz
 
 tz = pytz.timezone('Asia/Tokyo')
-NUTRITION_CATEGORY = {
+NUTRITION_CATEGORY: dict = {
     1: 'Dairy',
     2: 'Meat',
     3: 'Vegetable',
@@ -15,13 +15,13 @@ NUTRITION_CATEGORY = {
     5: 'Grain',
     6: 'Fat',
 }
-PROTEIN = 4
-FAT = 9
-CARBOHYDRATE = 4
-SITE_TITLE = "Small Dieting Projects"
+PROTEIN: int = 4
+FAT: int = 9
+CARBOHYDRATE: int = 4
+SITE_TITLE: str = "Small Dieting Projects"
 
 
-def page_layout_consumbles():
+def page_layout_consumbles() -> None:
     with ui.header(elevated=True).style('background-color: #333333').classes('items-center justify-between'):
         ui.label(SITE_TITLE).classes("text-xl text-center")
         ui.button(on_click=lambda: right_drawer.toggle()).props('flat color=white icon=menu')
@@ -45,24 +45,26 @@ class Nutrition:
             self.nutrition_name = ui.input(label="menu", placeholder="menu name")
             self.nutrition_category = ui.select(NUTRITION_CATEGORY)
         with ui.column().classes('w-full'):
-            self.nutrition_protein_title = ui.label("protein")
-            self.nutrition_protein = ui.slider(min=0, max=100, value=0)
-            self.nutrition_protein_label = ui.label().bind_text_from(self.nutrition_protein, 'value')
-        with ui.column().classes('w-full'):
-            self.nutrition_fat_title = ui.label("fat")
-            self.nutrition_fat = ui.slider(min=0, max=100, value=0)
-            self.nutrition_fat_label = ui.label().bind_text_from(self.nutrition_fat, 'value')
-        with ui.column().classes('w-full'):
-            self.nutrition_carbohydrate_title = ui.label("carb")
-            self.nutrition_carbohydrate = ui.slider(min=0, max=300, value=0)
-            self.nutrition_carbohydrate_label = ui.label().bind_text_from(self.nutrition_carbohydrate, 'value')
+            # self.nutrition_protein_title = ui.label("protein")
+            with ui.row():
+                self.nutrition_protein = ui.number(label='protein',  format='%.1f')
+            # self.nutrition_protein = ui.slider(min=0, max=100, value=0)
+            # self.nutrition_protein_label = ui.label().bind_text_from(self.nutrition_protein, 'value')
+        # with ui.column().classes('w-full'):
+        #     self.nutrition_fat_title = ui.label("fat")
+                self.nutrition_fat = ui.number(label='fat',  format='%.1f')
+            # self.nutrition_fat_label = ui.label().bind_text_from(self.nutrition_fat, 'value')
+        # with ui.column().classes('w-full'):
+        #     self.nutrition_carbohydrate_title = ui.label("carb")
+                self.nutrition_carbohydrate = ui.number(label='carbohydrate',  format='%.1f')
+            # self.nutrition_carbohydrate_label = ui.label().bind_text_from(self.nutrition_carbohydrate, 'value')
         with ui.column().classes('w-full'):
             self.nutrition_amount = ui.number(label="quantity", on_change=lambda: self.current_calories())
 
     def current_calories(self):
         global PROTEIN, FAT, CARBOHYDRATE
-        carolies = self.nutrition_protein.value * PROTEIN * self.nutrition_amount.value + self.nutrition_fat.value * FAT * self.nutrition_amount.value + self.nutrition_carbohydrate.value * CARBOHYDRATE * self.nutrition_amount.value
-        ui.notify(f"Calories: {carolies}")
+        calories: int = self.nutrition_protein.value * PROTEIN * self.nutrition_amount.value + self.nutrition_fat.value * FAT * self.nutrition_amount.value + self.nutrition_carbohydrate.value * CARBOHYDRATE * self.nutrition_amount.value
+        ui.notify(f"Calories: {calories}")
 
 
 
