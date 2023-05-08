@@ -4,12 +4,12 @@ ARG VERSION
 LABEL maintainer="Tat <tat@seriousexplosion.net>"
 
 RUN python -m pip install nicegui
+
 WORKDIR /app
+
 # Furthermore dependencies
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
-
-
 
 EXPOSE 8080
 

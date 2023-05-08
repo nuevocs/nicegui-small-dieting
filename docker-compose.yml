@@ -1,0 +1,10 @@
+version: "3"
+services:
+  nicegui:
+    container_name: "nicegui-demo"
+    image: nuevocs/nicegui-small-dieting:latest
+    restart: always
+    ports:
+        - '${PORTS}:8080'
+    volumes:
+        - ${PWD}:/app/
