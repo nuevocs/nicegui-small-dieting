@@ -9,7 +9,7 @@ def nutrition_records_content() -> None:
                            "date, nutrition_name, nutrition_protein, nutrition_fat, nutrition_carbohydrate, nutrition_calories",
                            "date", get_today_date())
     data = pd.DataFrame(data)
-    group_by = data.groupby('date').sum()
+    group_by = data.groupby('date').sum(numeric_only=True)
     data.to_csv("data.csv")
     group_by.to_csv("grpby.csv")
 

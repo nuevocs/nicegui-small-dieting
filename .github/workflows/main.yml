@@ -24,3 +24,6 @@ jobs:
           context: ./nicegui-small-dieting
           push: true
           tags: nuevocs/nicegui-small-dieting:latest
+          destination_container_repo: nuevocs/nicegui-small-dieting
+          provider: dockerhub
+          short_description: "my nicegui image"

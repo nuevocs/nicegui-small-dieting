@@ -15,9 +15,9 @@ NUTRITION_CATEGORY: dict = {
     5: 'Grain',
     6: 'Fat',
 }
-PROTEIN: int = 4
-FAT: int = 9
-CARBOHYDRATE: int = 4
+PROTEIN: float = 4.0
+FAT: float = 9.0
+CARBOHYDRATE: float = 4.0
 SITE_TITLE: str = "Small Dieting Projects"
 
 
@@ -38,33 +38,38 @@ def page_layout_consumbles() -> None:
 
 class Nutrition:
     def __init__(self):
-        with ui.column():
+        with ui.column().classes('w-full'):
+            with ui.row():
             # for future use. I want to use this to select the menu from the database
             # self.nutrition_name = ui.select([1,2])
             # self.nutrition_category = ui.select([1,2])
-            self.nutrition_name = ui.input(label="menu", placeholder="menu name")
-            self.nutrition_category = ui.select(NUTRITION_CATEGORY)
+                self.nutrition_category = ui.select(NUTRITION_CATEGORY)
+                self.nutrition_name = ui.input(label="menu", placeholder="menu name")
+                self.nutrition_amount = ui.number(label="quantity - you can get calories upon re-enter qty.", on_change=lambda: self.current_calories())
+
         with ui.column().classes('w-full'):
             # self.nutrition_protein_title = ui.label("protein")
             with ui.row():
-                self.nutrition_protein = ui.number(label='protein',  format='%.1f')
+                self.nutrition_protein = ui.number(label='protein')
             # self.nutrition_protein = ui.slider(min=0, max=100, value=0)
             # self.nutrition_protein_label = ui.label().bind_text_from(self.nutrition_protein, 'value')
         # with ui.column().classes('w-full'):
         #     self.nutrition_fat_title = ui.label("fat")
-                self.nutrition_fat = ui.number(label='fat',  format='%.1f')
+                self.nutrition_fat = ui.number(label='fat')
             # self.nutrition_fat_label = ui.label().bind_text_from(self.nutrition_fat, 'value')
         # with ui.column().classes('w-full'):
         #     self.nutrition_carbohydrate_title = ui.label("carb")
-                self.nutrition_carbohydrate = ui.number(label='carbohydrate',  format='%.1f')
+                self.nutrition_carbohydrate = ui.number(label='carbohydrate')
             # self.nutrition_carbohydrate_label = ui.label().bind_text_from(self.nutrition_carbohydrate, 'value')
-        with ui.column().classes('w-full'):
-            self.nutrition_amount = ui.number(label="quantity", on_change=lambda: self.current_calories())
+        # with ui.column().classes('w-full'):
 
     def current_calories(self):
         global PROTEIN, FAT, CARBOHYDRATE
-        calories: int = self.nutrition_protein.value * PROTEIN * self.nutrition_amount.value + self.nutrition_fat.value * FAT * self.nutrition_amount.value + self.nutrition_carbohydrate.value * CARBOHYDRATE * self.nutrition_amount.value
-        ui.notify(f"Calories: {calories}")
+        try:
+            calories: float = self.nutrition_protein.value * PROTEIN * self.nutrition_amount.value + self.nutrition_fat.value * FAT * self.nutrition_amount.value + self.nutrition_carbohydrate.value * CARBOHYDRATE * self.nutrition_amount.value
+            ui.notify(f"Calories: {calories}")
+        except TypeError:
+            ui.notify("Please re-input the quantity")
 
 
 
@@ -72,10 +77,10 @@ class Nutrition:
 class NutritionData:
     nutrition_name: str
     nutrition_category: str
-    nutrition_protein: int
-    nutrition_fat: int
-    nutrition_carbohydrate: int
-    nutrition_amount: int
+    nutrition_protein: float
+    nutrition_fat: float
+    nutrition_carbohydrate: float
+    nutrition_amount: float
     nutrition_calories: float
     date: str = datetime.datetime.now(tz).strftime('%Y-%m-%d')
 
@@ -93,11 +98,12 @@ async def nutrition_records():
     nutrition_records_content()
 
 
+
 @ui.page('/')
 async def main_content():
     def get_data_from_inputs():
         global PROTEIN, FAT, CARBOHYDRATE
-        nutrition_data = NutritionData(
+        nutrition_data: NutritionData = NutritionData(
             nutrition_name=nutrition.nutrition_name.value,
             nutrition_category=nutrition.nutrition_category.value,
             nutrition_protein=nutrition.nutrition_protein.value,
@@ -111,11 +117,11 @@ async def main_content():
 
         # reset all inputs
         nutrition.nutrition_name.value = ""
-        nutrition.nutrition_category.value = 0
-        nutrition.nutrition_protein.value = 0
-        nutrition.nutrition_fat.value = 0
-        nutrition.nutrition_carbohydrate.value = 0
-        nutrition.nutrition_amount.value = 0
+        nutrition.nutrition_category.value = ""
+        nutrition.nutrition_protein.value = ""
+        nutrition.nutrition_fat.value = ""
+        nutrition.nutrition_carbohydrate.value = ""
+        nutrition.nutrition_amount.value = ""
 
 
     def writing_data_to_db(collection):
