@@ -3,7 +3,7 @@ ARG VERSION
 
 LABEL maintainer="Tat <tat@seriousexplosion.net>"
 
-RUN python -m pip install nicegui==$VERSION itsdangerous isort docutils
+RUN python -m pip install nicegui
 WORKDIR /app
 # Furthermore dependencies
 COPY ./requirements.txt /requirements.txt
