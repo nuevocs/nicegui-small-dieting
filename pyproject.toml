@@ -11,6 +11,8 @@ python = "^3.11"
 nicegui = "^1.2.13"
 supabase = "^1.0.3"
 pipreqs = "^0.4.13"
+pytz = "^2023.3"
+pandas = "^2.0.1"
 
 
 [build-system]

@@ -112,6 +112,7 @@ async def main_content():
             nutrition_amount=nutrition.nutrition_amount.value,
             nutrition_calories=nutrition.nutrition_protein.value * PROTEIN * nutrition.nutrition_amount.value + nutrition.nutrition_fat.value * FAT * nutrition.nutrition_amount.value + nutrition.nutrition_carbohydrate.value * CARBOHYDRATE * nutrition.nutrition_amount.value
         )
+        print(nutrition_data)
         collection.append(nutrition_data)
         collection_table.update()
 
