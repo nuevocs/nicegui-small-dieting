@@ -7,6 +7,8 @@ import datetime
 import pytz
 
 tz = pytz.timezone('Asia/Tokyo')
+jst_no_tz = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None) + datetime.timedelta(hours=9)
+
 NUTRITION_CATEGORY: dict = {
     1: 'Dairy',
     2: 'Meat',
@@ -82,7 +84,8 @@ class NutritionData:
     nutrition_carbohydrate: float
     nutrition_amount: float
     nutrition_calories: float
-    date: str = datetime.datetime.now(tz).strftime('%Y-%m-%d')
+    date: str = jst_no_tz.strftime('%Y-%m-%d')
+    # date: str = datetime.datetime.now(tz).strftime('%Y-%m-%d')
 
 
 # column_name and dataclass attribute name must be the same
